@@ -1,12 +1,13 @@
 from pygame.draw import rect
-from abc import ABC, abstractmethod
+from pygame.mixer import music
 
-class Color(ABC):
+class Color():
     def __init__(self, x, y, box_size):
         self._x = x
         self._y = y
         self._box_size = box_size
         self.color = None
+        self.sound = 0
 
     @property
     def x(self):
@@ -20,39 +21,30 @@ class Color(ABC):
         """ Draws the box """
         rect(surface, self.color, (self.x, self.y, self.box_size, self._box_size))
 
-    @abstractmethod
     def play(self):
         """ Plays coresponding sound """
-        pass
+        self.sound.play(0)
 
 class Red(Color):
     def __init__(self, x, y, box_size):
         super().__init__()
         self.color = (255, 0, 0)
-
-    def play(self):
-        pass
+        self.sound = music.load('sound/red.wav')
 
 class Green(Color):
     def __init__(self, x, y, box_size):
         super().__init__()
         self.color = (0, 255, 0)
-
-    def play(self):
-        pass
+        self.sound = music.load('sound/green.wav')
 
 class Blue(Color):
     def __init__(self, x, y, box_size):
         super().__init__()
         self.color = (0, 0, 255)
-
-    def play(self):
-        pass
+        self.sound = music.load('sound/blue.wav')
 
 class Yellow(Color):
     def __init__(self, x, y, box_size):
         super().__init__()
         self.color = (255, 255, 0)
-
-    def play(self):
-        pass
+        self.sound = music.load('sound/yellow.wav')
