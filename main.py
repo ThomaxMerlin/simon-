@@ -18,6 +18,15 @@ def draw(surface, colors_):
 
     pygame.display.update()
 
+def is_clicked(pos, color):
+    """ If the box is clicked """
+    m_x, m_y = pos
+
+    if color.x < m_x < color.x + color.box_size and color.y < m_y < color.y + color.box_size:
+        return True
+    
+    return False
+
 def main(surface):
     """ Main function """
     red = Red(BOX_SIZE // 2, BOX_SIZE // 2, BOX_SIZE)
@@ -35,6 +44,12 @@ def main(surface):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+            if pygame.mouse.get_pressed()[0]:
+                pos = pygame.mouse.get_pos()
+
+                for color in colors_:
+                    if is_clicked(pos, color):
+                        color.play()
 
     pygame.quit()
 
