@@ -1,4 +1,4 @@
-import pygame
+from pygame.draw import rect
 from abc import ABC, abstractmethod
 
 class Color(ABC):
@@ -6,6 +6,7 @@ class Color(ABC):
         self._x = x
         self._y = y
         self._box_size = box_size
+        self.color = None
 
     @property
     def x(self):
@@ -15,10 +16,9 @@ class Color(ABC):
     def y(self):
         return self._y
 
-    @abstractmethod
     def draw(self, surface):
         """ Draws the box """
-        pass
+        rect(surface, self.color, (self.x, self.y, self.box_size, self._box_size))
 
     @abstractmethod
     def play(self):
@@ -30,10 +30,6 @@ class Red(Color):
         super().__init__()
         self.color = (255, 0, 0)
 
-    def draw(self, surface):
-        """ Draws the box """
-        pygame.draw.rect(surface, self.color, (self.x, self.y, self.box_size, self._box_size))
-
     def play(self):
         pass
 
@@ -41,10 +37,6 @@ class Green(Color):
     def __init__(self, x, y, box_size):
         super().__init__()
         self.color = (0, 255, 0)
-
-    def draw(self, surface):
-        """ Draws the box """
-        pygame.draw.rect(surface, self.color, (self.x, self.y, self.box_size, self._box_size))
 
     def play(self):
         pass
@@ -54,10 +46,6 @@ class Blue(Color):
         super().__init__()
         self.color = (0, 0, 255)
 
-    def draw(self, surface):
-        """ Draws the box """
-        pygame.draw.rect(surface, self.color, (self.x, self.y, self.box_size, self._box_size))
-
     def play(self):
         pass
 
@@ -65,10 +53,6 @@ class Yellow(Color):
     def __init__(self, x, y, box_size):
         super().__init__()
         self.color = (255, 255, 0)
-
-    def draw(self, surface):
-        """ Draws the box """
-        pygame.draw.rect(surface, self.color, (self.x, self.y, self.box_size, self._box_size))
 
     def play(self):
         pass
