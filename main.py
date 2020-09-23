@@ -1,4 +1,7 @@
 import pygame
+import random
+
+from pygame.mixer import fadeout
 from colors import *
 
 pygame.init()
@@ -32,7 +35,8 @@ def play_clicked(surface, color):
     color.play()
     pygame.draw.rect(surface, (150, 150, 150), (color.x, color.y, BOX_SIZE, BOX_SIZE))
     pygame.display.update()
-    pygame.time.delay(500)
+    pygame.time.delay(250)
+    pygame.draw.rect(surface, color.color, (color.x, color.y, BOX_SIZE, BOX_SIZE))
 
 def main(surface):
     """ Main function """
@@ -44,6 +48,11 @@ def main(surface):
     # Game variables
     colors_ = [red, green, blue, yellow]
     run = True
+    computers_turn = True
+
+    # Patterns
+    pattern = [random.choice(colors_)]
+    player_pattern = []
 
     while run:
         draw(surface, colors_)
@@ -55,8 +64,27 @@ def main(surface):
                 pos = pygame.mouse.get_pos()
 
                 for color in colors_:
-                    if is_clicked(pos, color):
+                    if is_clicked(pos, color) and not computers_turn:
+                        player_pattern.append(color)
                         play_clicked(surface, color)
+
+                        if pattern[pattern.index(color)] != player_pattern[player_pattern.index(color)]:
+                            run = False
+
+        if len(pattern) == len(player_pattern):
+            pygame.time.delay(500)
+            pattern.append(random.choice(colors_))
+            player_pattern = []
+            computers_turn = True
+
+        if computers_turn:
+            pygame.time.delay(500)
+
+            for color in pattern:
+                pygame.time.delay(500)
+                play_clicked(surface, color)
+            
+            computers_turn = False
 
     pygame.quit()
 
