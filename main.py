@@ -27,6 +27,13 @@ def is_clicked(pos, color):
     
     return False
 
+def play_clicked(surface, color):
+    """ Plays on clicked """
+    color.play()
+    pygame.draw.rect(surface, (150, 150, 150), (color.x, color.y, BOX_SIZE, BOX_SIZE))
+    pygame.display.update()
+    pygame.time.delay(500)
+
 def main(surface):
     """ Main function """
     red = Red(BOX_SIZE // 2, BOX_SIZE // 2, BOX_SIZE)
@@ -49,7 +56,7 @@ def main(surface):
 
                 for color in colors_:
                     if is_clicked(pos, color):
-                        color.play()
+                        play_clicked(surface, color)
 
     pygame.quit()
 
